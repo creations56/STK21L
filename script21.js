@@ -2,6 +2,8 @@
 //            initialisation des variables
 // ----------------------------------------------------------
 
+// mofication 01/2025 : pour afficher l'operation "Enter" par defaut la fonction "fenter" active l'affichage
+
 let titreBouton='',
   entreeEnCours=false,
 	position=1, // position entree d'un nombre
@@ -223,7 +225,9 @@ function fDown(){
 
 function fEnter(){ 
   // si entree = '' la touche ENTER est inactive
-  if (entree!==''){pile0=parseFloat(entree);entree='';}
+  // pour afficher l'operation "Enter" par defaut la fonction "fenter" active l'affichage de l'operation
+  var xResult="ENTER"; // variable affichage historique
+  if (entree!==''){pile0=parseFloat(entree);entree='';affichageResults(xResult);}
   
   //else {return}
 }
@@ -335,6 +339,7 @@ function boutonBlanc(x) {
  
 function boutonGris(x){
   // gestion des boutons gris, gestion pile et autres
+  // pour afficher l'operation "Enter" par defaut la fonction "fenter" active l'affichage
   
   var r=0;// variable locale pour calculs
   var flagR=true; // affichageResult
@@ -358,8 +363,8 @@ function boutonGris(x){
     if (x==='bdplus'){if (decimales>0){decimales -=1};flagR=false} // D-
   }
   
-  if (x==='benter'){fEnter();xResult="ENTER"};// fEnter affiche deja results
-  if (x==='bpi'){fEnter();fUp();pile0=Math.PI;xResult="ENTER"} 
+  if (x==='benter'){fEnter();flagR=false;xResult="ENTER"};// fEnter affiche deja results
+  if (x==='bpi'){fEnter();flagR=false;fUp();pile0=Math.PI;xResult="ENTER"} 
   
   clicBjaune=false; // raz touche jaune avant affichage pile
   affichagePile(); 
@@ -374,7 +379,7 @@ function boutonBleu(x){
   var xResult="op"; // variable affichage historique
   
   if (x==='bdiv'){
-    fEnter();
+    fEnter();flagR=false;
     r=pile1/pile0;
     if (isNaN(r)) {warning=listWarning[4];flagR=false} // erreur div par 0
     else if (Math.abs(r)>maxNumber) {warning=listWarning[2];flagR=false} // erreur max number
